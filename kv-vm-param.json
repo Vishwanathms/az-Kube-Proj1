@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminPassword": {
+            "value": "Password12345"
+        },
+        "vnetId": {
+            "value": "/subscriptions/b4f0d99c-f4f9-449e-bf16-1b6e253ac5d1/resourceGroups/kube-proj-sep-24/providers/Microsoft.Network/virtualNetworks/myVNet"
+        },
+        "subnetName": {
+            "value": "mySubnet"
+        }
+    }
+}

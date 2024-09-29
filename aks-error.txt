@@ -1,0 +1,4 @@
+{"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/b4f0d99c-f4f9-449e-bf16-1b6e253ac5d1/resourceGroups/kube-proj-sep-24/providers/Microsoft.Resources/deployments/aks-node-2","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"BadRequest","target":"/subscriptions/b4f0d99c-f4f9-449e-bf16-1b6e253ac5d1/resourceGroups/kube-proj-sep-24/providers/Microsoft.ContainerService/managedClusters/myAKSCluster","message":"{\r\n  \"code\": \"ServiceCidrOverlapExistingSubnetsCidr\",\r\n  \"details\": null,\r\n  \"message\": \"The specified service CIDR 10.0.0.0/16 is conflicted with an existing subnet CIDR 10.0.1.0/24. Please see https://aka.ms/aks/servicecidroverlap for how to fix the error.\",\r\n  \"subcode\": \"\",\r\n  \"target\": \"networkProfile.serviceCIDR\"\r\n}"}]}}
+
+
+
