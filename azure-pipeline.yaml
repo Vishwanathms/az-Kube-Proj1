@@ -36,7 +36,7 @@ stages:
 
       - task: SonarCloudPrepare@1
         inputs:
-          SonarCloud: 'SonarCloud'  # Name of the service connection to SonarCloud
+          SonarCloud: 'sonarcloud-kube-prj1'  # Name of the service connection to SonarCloud
           organization: 'tg-vishwa-aug24'  # Replace with your SonarCloud organization
           scannerMode: 'CLI'
           configMode: 'manual'
