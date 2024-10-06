@@ -2,14 +2,16 @@
 
 ## This is project work for below flow 
 * Bicep Templates
-* Azure Devops 
-* Kubernetes 
-* Docker 
+* Kubernetes
 * Azure container Registry  -- To Store 
+* VM for agent 
+* Azure key vault
+
+* Azure Devops 
+* Docker - to be installed on the agent 
 * SonarQube -- Code scanner 
 * Trivy -- Docker Image scanner
 * Artifactory 
-* Azure key vault
 * Kubernetes Monitoring tools
 
 
@@ -46,7 +48,7 @@ az deployment group create --resource-group kube-proj-sep-24 --template-file ./k
 
 az deployment group delete --name keyvault-vm --resource-group kube-proj-sep-24
 ```
-  * ACR 
+  * ACR creation using Bicep
 ```
 az provider register --namespace Microsoft.ContainerRegistry
 

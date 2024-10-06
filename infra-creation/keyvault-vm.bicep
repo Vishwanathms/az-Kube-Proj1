@@ -21,7 +21,7 @@ param vnetId string
 param subnetName string
 
 @description('Name of the Key Vault')
-param keyVaultName string = 'kvvishwa290924'
+param keyVaultName string = 'kvvishwa061024'
 
 @description('Public IP Allocation Method (Static/Dynamic)')
 param publicIpAllocationMethod string = 'Dynamic'
