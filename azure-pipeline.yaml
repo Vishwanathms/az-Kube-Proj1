@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  imageName: 'webapp'  
+  imageTag: '$(Build.BuildId)'
+
 stages:
   - stage: Pacaking 
     pool:
@@ -40,6 +44,7 @@ stages:
           sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
           java -version  # Verify Java installation
         displayName: 'Install and Configure Java 17'
+
       - script: |
           wget -O sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
           unzip sonar-scanner-cli.zip
@@ -52,3 +57,38 @@ stages:
         displayName: 'Run SonarScanner CLI'
         env:
           SONAR_TOKEN: $(SONAR_TOKEN)
+
+
+    - job: Job_2
+      displayName: create&scan_image
+      steps:
+      - script: echo Cloning the repo
+        displayName: 'Run a one-line script'
+      - checkout: self
+        fetchDepth: 1
+
+        # Build Docker Image
+      - task: Docker@2
+        displayName: 'Build Docker Image'
+        inputs:
+          command: build
+          repository: '$(imageName)'
+          tags: '$(imageTag)'
+
+          # Install Trivy
+      - script: |
+          sudo apt-get install wget -y
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.41.0/trivy_0.41.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.41.0_Linux-64bit.deb
+        displayName: 'Install Trivy'
+
+          # Scan the Docker image
+      - script: |
+          trivy image --exit-code 1 $(imageName):$(imageTag)
+        displayName: 'Scan Docker Image'
+
+      - task: Docker@2
+        displayName: 'Login to Docker Hub'
+        inputs:
+          command: login
+          containerRegistry: 'acr-private1'
