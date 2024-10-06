@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     jobs:
-    - job: Job_1
+    - job: Code_Build
       displayName: code_clone_scan
       steps:
       - script: echo Cloning the repo
@@ -59,8 +59,10 @@ stages:
           SONAR_TOKEN: $(SONAR_TOKEN)
 
 
-    - job: Job_2
+    - job: image_creation
       displayName: create&scan_image
+      #dependsOn: Code_Build
+      #condition: succeeded()
       steps:
       - script: echo Cloning the repo
         displayName: 'Run a one-line script'
@@ -74,14 +76,14 @@ stages:
           command: build
           repository: '$(imageName)'
           tags: '$(imageTag)'
-
+        condition: succeeded()
           # Install Trivy
       - script: |
           sudo apt-get install wget -y
           wget https://github.com/aquasecurity/trivy/releases/download/v0.41.0/trivy_0.41.0_Linux-64bit.deb
           sudo dpkg -i trivy_0.41.0_Linux-64bit.deb
         displayName: 'Install Trivy'
-
+        condition: succeeded()
           # Scan the Docker image
       - script: |
           trivy image --exit-code 1 $(imageName):$(imageTag)
@@ -92,3 +94,4 @@ stages:
         inputs:
           command: login
           containerRegistry: 'acr-private1'
+        condition: succeeded()
