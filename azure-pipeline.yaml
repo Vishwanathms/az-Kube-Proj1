@@ -40,12 +40,7 @@ stages:
         displayName: 'Install SonarScanner CLI'
 
       - script: |
-          sonar-scanner \
-          -Dsonar.projectKey=tg-vishwa-aug24 \
-          -Dsonar.organization=tg-vishwa-aug24 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$(SONAR_TOKEN) \
-          -Dsonar.python.version=3.x  # Replace with the Python version you use
+          $(pwd)/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner -Dsonar.projectKey=tg-vishwa-aug24 -Dsonar.organization=tg-vishwa-aug24 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$(SONAR_TOKEN) -Dsonar.python.version=3.x  # Replace with the Python version you use
         displayName: 'Run SonarScanner CLI'
         env:
           SONAR_TOKEN: $(SONAR_TOKEN)
