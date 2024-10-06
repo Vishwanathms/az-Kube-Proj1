@@ -9,7 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-
 stages:
   - stage: Pacaking 
     pool:
@@ -34,17 +33,19 @@ stages:
           pip install -r requirements.txt
         displayName: 'Install Python dependencies'
 
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: 'sonarcloud-kube-prj1'  # Name of the service connection to SonarCloud
-          organization: 'tg-vishwa-aug24'  # Replace with your SonarCloud organization
-          scannerMode: 'CLI'
-          configMode: 'manual'
-          cliProjectKey: 'tg-vishwa-aug24'  # Replace with your SonarCloud project key
-          cliSources: '.'
-      - task: SonarCloudAnalyze@1
-        displayName: 'Run SonarCloud analysis'
-      - task: SonarCloudPublish@1
-        inputs:
-          pollingTimeoutSec: '300'  # Adjust based on your build times
-        displayName: 'Publish SonarCloud results'
+      - script: |
+          wget -O sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner-cli.zip
+          export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+        displayName: 'Install SonarScanner CLI'
+
+      - script: |
+          sonar-scanner \
+          -Dsonar.projectKey=tg-vishwa-aug24 \
+          -Dsonar.organization=tg-vishwa-aug24 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=$(SONAR_TOKEN) \
+          -Dsonar.python.version=3.x  # Replace with the Python version you use
+        displayName: 'Run SonarScanner CLI'
+        env:
+          SONAR_TOKEN: $(SONAR_TOKEN)
