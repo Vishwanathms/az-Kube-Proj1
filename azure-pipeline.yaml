@@ -33,10 +33,16 @@ stages:
           pip install -r requirements.txt
         displayName: 'Install Python dependencies'
 
+      - task: UseJava@1
+        inputs:
+          versionSpec: '17.x'  # Install Java 17
+          jdkArchitectureOption: 'x64'
+          setJavaHome: true
       - script: |
           wget -O sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
           unzip sonar-scanner-cli.zip
           export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+          ls -l $(pwd)/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner
         displayName: 'Install SonarScanner CLI'
 
       - script: |
