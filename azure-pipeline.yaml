@@ -36,8 +36,10 @@ stages:
       - script: |
           sudo apt-get update
           sudo apt-get install openjdk-17-jdk -y
+          sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-17-openjdk-amd64/bin/java 1
+          sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
           java -version  # Verify Java installation
-        displayName: 'Install Java 17'
+        displayName: 'Install and Configure Java 17'
       - script: |
           wget -O sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
           unzip sonar-scanner-cli.zip
